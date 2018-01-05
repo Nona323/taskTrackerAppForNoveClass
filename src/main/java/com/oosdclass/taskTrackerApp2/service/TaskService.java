@@ -10,4 +10,11 @@ public interface TaskService {
 
 	void saveTask(Task task);
 
+	public Task getTaskById(int taskId);
+
+	public void updateTaskAssignedTo(int taskID, String username);
+
+	void updateTaskStatus(int taskID, String status, String username);
+
+	void deleteTask(int taskID);
 }

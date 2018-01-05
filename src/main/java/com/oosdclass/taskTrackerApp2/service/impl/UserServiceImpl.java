@@ -13,46 +13,51 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDAO userDAO;
 
-	
 	@Override
 	public boolean isUserValid(User user) {
-		
+
 		User userFromDb = userDAO.retrieveByUserName(user.getUsername());
-		
-		
-				if(user.getUsername().equals(userFromDb.getUsername()) &&
-						user.getPassword().equals(userFromDb.getPassword())) {
+
+		// if no user with username exists in the DB return false
+		if (userFromDb == null) {
+			return false;
+		}
+
+		// if username/password typed in by user matches username/password from db
+		// return true
+		if (user.getUsername().equals(userFromDb.getUsername())
+				&& user.getPassword().equals(userFromDb.getPassword())) {
 			return true;
+		} else {
+			return false;
 		}
-		else {
-			return false;	
-		}
-		
 	}
+
 	@Override
 	public boolean doesUserExist(User user) {
-		
+
 		User userFromDb = userDAO.retrieveByUserName(user.getUsername());
-		
-		if(userFromDb == null) {
+
+		if (userFromDb == null) {
 			return false;
 		}
-			
+
 		else {
-			return true;	
-		}
-		
-	}
-	@Override
-	public boolean isUserAdmin(User user) {
-		
-		User userFromDb = userDAO.retrieveByUserName(user.getUsername());
-		
-		if(userFromDb.getUsername().equals("admin")){
 			return true;
 		}
-		else {
+
+	}
+
+	@Override
+	public boolean isUserAdmin(User user) {
+
+		User userFromDb = userDAO.retrieveByUserName(user.getUsername());
+
+		if (userFromDb.getUsername().equals("admin")) {
+			return true;
+		} else {
 			return false;
 		}
-		}
+	}
+
 }
